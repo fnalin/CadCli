@@ -1,15 +1,22 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
+import { ClienteService } from './cliente.service';
 import { ClienteListComponent } from './cliente-list.component';
 
 @NgModule({
-    imports: [],
+    imports: [
+        SharedModule,
+        RouterModule.forChild([
+            { path: 'clientes', component: ClienteListComponent }
+        ])
+    ],
     declarations: [
         ClienteListComponent
     ],
-    exports: [
-        ClienteListComponent
-    ],
-    providers: []
+    providers: [
+        ClienteService
+        ]
 })
 export class ClienteModule { }
