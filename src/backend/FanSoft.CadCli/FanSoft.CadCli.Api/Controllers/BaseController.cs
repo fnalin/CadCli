@@ -5,7 +5,7 @@ using System.Net;
 
 namespace FanSoft.CadCli.Api.Controllers
 {
-    [Authorize()]
+    //[Authorize()]
     public abstract class BaseController : Controller
     {
 

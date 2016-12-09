@@ -109,8 +109,11 @@ namespace FanSoft.CadCli.Api
                 }
             });
 
-
-            app.UseMvcWithDefaultRoute();
+            app.UseCors(options => {
+                options.AllowAnyHeader();
+                options.AllowAnyMethod();
+                options.AllowAnyOrigin();
+            });
             app.UseMvc();
 
             DbInitializer.Initialize(dataContext);
