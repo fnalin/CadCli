@@ -10,23 +10,26 @@ export class ClienteListComponent implements OnInit {
     subTitle: string = 'Listagem de clientes';
 
     clientes: ICliente[];
-    errorMessage:string;
-    times=['Coringão', 'Portuguesa', 'Santos'];
+    errorMessage: string;
+    statusLoading: boolean = false;
+
 
     constructor(private _cliService: ClienteService) { }
 
     ngOnInit(): void {
+        this.statusLoading = true;
         this.ObterDados();
     }
 
-    ObterDados():void{
+    ObterDados(): void {
         this._cliService.obterTodos()
-            .subscribe(clientes=>{
+            .subscribe(clientes => {
                 this.clientes = clientes;
-                console.log(this.clientes);
-            },error=>{
-                 this.errorMessage = <any>error;
+                this.statusLoading = false;
+            }, error => {
+                this.errorMessage = <any>error;
                 console.log(this.errorMessage);
+                this.statusLoading = false;
             });
     }
 }
