@@ -1,0 +1,42 @@
+<div class="mt-1">
+    <h1>{{pageTitle}}</h1>
+</div>
+<p class="lead">
+    {{subTitle}}
+</p>
+
+
+<div class="container" novalidate>
+    <form (submit)="login($event)" [formGroup]="loginForm">
+
+        <div class="form-group row" [ngClass]="{'has-danger':loginForm.controls.username.invalid && loginForm.controls.username.touched}">
+
+            <label for="email" class="col-sm-2 col-form-label text-right">Login</label>
+            <div class="col-sm-6">
+                <input type="email" class="form-control" id="email" placeholder="Email" required formControlName="username" name="username"
+                    [(ngModel)]="loginVm.username" autocomplete="off">
+            </div>
+            <div class="form-control-feedback" *ngIf="loginForm.controls.username.invalid && loginForm.controls.username.touched">
+                Este campo é obrigatório e deve ter entre 5 e 50 caracteres
+            </div>
+        </div>
+
+        <div class="form-group row" [ngClass]="{'has-danger':loginForm.controls.password.invalid && loginForm.controls.password.touched}">
+
+            <label for="senha" class="col-sm-2 col-form-label text-right">Senha</label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" id="senha" placeholder="Password" required formControlName="password" name="password"
+                    [(ngModel)]="loginVm.password" autocomplete="off">
+            </div>
+            <div class="form-control-feedback" *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched">
+                Este campo é obrigatório e deve ter entre 2 e 50 caracteres
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Entrar</button> |
+                <a routerLink="">Cancelar</a>
+            </div>
+        </div>
+    </form>
+</div>

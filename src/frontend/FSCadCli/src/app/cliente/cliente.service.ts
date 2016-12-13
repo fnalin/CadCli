@@ -15,10 +15,13 @@ export class ClienteService {
     constructor(private _http: Http) {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
+
+        let authToken = localStorage.getItem('auth_token');
+        this.headers.append('Authorization', `Bearer ${authToken}`);
     }
 
     obterTodos(): Observable<ICliente[]> {
-        return this._http.get(this._url)
+        return this._http.get(this._url, { headers: this.headers })
             .map((response: Response) => <ICliente[]>response.json())
             // .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
