@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    //$("input[name=parametro]").focus();
+    $("input[name=username]").focus();
   }
 
   login(event) {
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
       }
       , error => {
         this.errorMessage = <any>error;
-        console.log(this.errorMessage);
+        $("input[name=username]").focus();
         this.statusLoading = false;
       });
   }
