@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
+
+import "rxjs/Rx";
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserService {
@@ -15,9 +18,9 @@ export class UserService {
 
     return this.http
       .post(
-        'http://localhost:60814/api/v1/security/token', 
-        JSON.stringify({ username, password }), 
-        { headers }
+      'http://localhost:60814/api/v1/security/token',
+      JSON.stringify({ username, password }),
+      { headers }
       )
       .map(res => res.json())
       .map((res) => {
@@ -27,9 +30,18 @@ export class UserService {
         }
 
         return res.authenticated;
-      });
+      })
+      .catch(this.handleError);
   }
-  
+
+  private handleError(response: Response) {
+    if (response.status == 400) {
+      return Observable.throw('Usuário não autenticado');
+    }
+    var data = JSON.parse((<any>response)._body).errors;
+    return Observable.throw(data || 'Server error');
+  }
+
   logout() {
     localStorage.removeItem('auth_token');
     this.loggedIn = false;

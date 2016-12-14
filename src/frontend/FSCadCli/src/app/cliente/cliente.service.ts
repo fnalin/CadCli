@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
+import { Router } from '@angular/router';
 
 import "rxjs/Rx";
 import { Observable } from 'rxjs/Observable';
@@ -12,7 +13,9 @@ export class ClienteService {
     headers: Headers;
     private _url = 'http://localhost:60814/api/v1/clientes';
 
-    constructor(private _http: Http) {
+    constructor(
+        private _http: Http,
+        private router: Router) {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
 
@@ -28,8 +31,11 @@ export class ClienteService {
     }
 
     private handleError(response: Response) {
+        if (response.status == 401 || response.status == 403) {
+            this.router.navigate(['/login']);
+            return;
+        }
         var data = JSON.parse((<any>response)._body).errors;
         return Observable.throw(data || 'Server error');
     }
-
 }

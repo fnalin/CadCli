@@ -5,9 +5,12 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ClienteModule } from './cliente/cliente.module';
 import { LoginModule } from './login/login.module';
+import { MenuModule } from './menu/menu.module';
+
 
 import {UserService} from './login/user.service';
 import {LoggedInGuard} from './login/logged-in.guard';
+import {GlobalEventsManagerService} from './shared/global-events-manager.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -22,12 +25,13 @@ import { HomeComponent } from './home/home.component';
     HttpModule,
     ClienteModule,
     LoginModule,
+    MenuModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent },
+      { path: '', component: HomeComponent,  canActivate: [LoggedInGuard] },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ]),
   ],
-  providers: [UserService, LoggedInGuard],
+  providers: [UserService, LoggedInGuard, GlobalEventsManagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

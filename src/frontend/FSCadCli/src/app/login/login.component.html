@@ -1,3 +1,4 @@
+<ajax-loading [statusLoading]="statusLoading"></ajax-loading>
 <div class="mt-1">
     <h1>{{pageTitle}}</h1>
 </div>
@@ -6,8 +7,18 @@
 </p>
 
 
-<div class="container" novalidate>
-    <form (submit)="login($event)" [formGroup]="loginForm">
+<div class="container">
+
+    <div class="alert alert-danger alert-dismissible fade in" *ngIf="errorMessage" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="alert-heading">Erro</h4>
+        <p>{{errorMessage}}!</p>
+        <p class="mb-0">Verifique seus dados e tente um novo acesso.</p>
+    </div>
+
+    <form (submit)="login($event)" [formGroup]="loginForm" novalidate>
 
         <div class="form-group row" [ngClass]="{'has-danger':loginForm.controls.username.invalid && loginForm.controls.username.touched}">
 

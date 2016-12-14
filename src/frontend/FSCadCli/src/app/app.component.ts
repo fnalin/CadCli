@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UserService } from './login/user.service';
+// import { UserService } from './login/user.service';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +10,13 @@ import { UserService } from './login/user.service';
 export class AppComponent implements OnInit {
   pageTitle: string = 'FanSoft CadCli';
   subTitle: string = 'Seja bem-vindo ao aplicativo Demo';
-  statusLogin: boolean;
+  // statusLogin: boolean;
 
-  constructor(private _user: UserService) { }
+  constructor(
+    //private _user: UserService
+    ) { }
 
   ngOnInit(): void {
-    this.statusLogin = this._user.isLoggedIn();
+    // this.statusLogin = this._user.isLoggedIn();
   }
 }
