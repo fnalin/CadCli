@@ -6,4 +6,5 @@ import { Component } from '@angular/core'
 export class HomeComponent {
     public pageTitle: string = 'FanSoft CadCli';
     public subTitle: string = 'Seja bem-vindo ao aplicativo Demo';
+
 }

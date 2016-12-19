@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AppSettingsService } from '../config/app-settings.service';
 
 import "rxjs/Rx";
 import { Observable } from 'rxjs/Observable';
@@ -11,16 +12,19 @@ import { ICliente } from './cliente';
 export class ClienteService {
 
     headers: Headers;
-    private _url = 'http://localhost:60814/api/v1/clientes';
+    private _url:string;
 
     constructor(
         private _http: Http,
+        private _config: AppSettingsService,
         private router: Router) {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
 
         let authToken = localStorage.getItem('auth_token');
         this.headers.append('Authorization', `Bearer ${authToken}`);
+
+        this._url = this._config.urlBase("clientes");
     }
 
     obterTodos(): Observable<ICliente[]> {
@@ -30,12 +34,17 @@ export class ClienteService {
             .catch(this.handleError);
     }
 
-    private handleError(response: Response) {
-        if (response.status == 401 || response.status == 403) {
-            this.router.navigate(['/login']);
-            return;
+    private handleError = (error: Response) => {
+        var data: any;
+        if (error.status == 401 || error.status == 403) {
+            localStorage.removeItem('auth_token');
+            this.router.navigate(['login']);
+            data = "Acesso não autorizado";
+        } else {
+            data = JSON.parse((<any>error)._body).errors;
         }
-        var data = JSON.parse((<any>response)._body).errors;
         return Observable.throw(data || 'Server error');
     }
+
+
 }

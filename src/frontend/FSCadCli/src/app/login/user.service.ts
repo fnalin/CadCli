@@ -17,11 +17,8 @@ export class UserService {
     headers.append('Content-Type', 'application/json');
 
     return this.http
-      .post(
-      'http://localhost:60814/api/v1/security/token',
-      JSON.stringify({ username, password }),
-      { headers }
-      )
+      .post('http://localhost:60814/api/v1/security/token',JSON.stringify({ username, password }),
+            { headers })
       .map(res => res.json())
       .map((res) => {
         if (res.authenticated) {

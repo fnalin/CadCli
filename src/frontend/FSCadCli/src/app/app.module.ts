@@ -8,9 +8,11 @@ import { LoginModule } from './login/login.module';
 import { MenuModule } from './menu/menu.module';
 
 
+import {AppSettingsService} from './config/app-settings.service';
 import {UserService} from './login/user.service';
 import {LoggedInGuard} from './login/logged-in.guard';
 import {GlobalEventsManagerService} from './shared/global-events-manager.service';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -31,7 +33,7 @@ import { HomeComponent } from './home/home.component';
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ]),
   ],
-  providers: [UserService, LoggedInGuard, GlobalEventsManagerService],
+  providers: [UserService, AppSettingsService, LoggedInGuard, GlobalEventsManagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
