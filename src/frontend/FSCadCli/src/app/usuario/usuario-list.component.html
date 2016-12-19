@@ -1,0 +1,32 @@
+<ajax-loading [statusLoading]="statusLoading"></ajax-loading>
+<div class="mt-1">
+    <h1>{{pageTitle}}</h1>
+</div>
+<p class="lead">
+    {{subTitle}}
+</p>
+
+<div class="table-responsive"> 
+    <table class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Data Cadastro</th>
+                <th>Data Alteração</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let usuario of usuarios">
+                <td>{{usuario.id}}</td>
+                <td>{{usuario.nome}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.cadastro | date:'dd/MM/yy hh:MM'}}</td>
+                <td>{{usuario.alteracao | date:'dd/MM/yy hh:MM'}}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

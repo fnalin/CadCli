@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ClienteModule } from './cliente/cliente.module';
+import { UsuarioModule } from './usuario/usuario.module';
 import { LoginModule } from './login/login.module';
 import { MenuModule } from './menu/menu.module';
 
@@ -25,6 +26,7 @@ import { HomeComponent } from './home/home.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    UsuarioModule,
     ClienteModule,
     LoginModule,
     MenuModule,
