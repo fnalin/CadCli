@@ -21,13 +21,15 @@ namespace FanSoft.CadCli.Api.Controllers
             var clientes =
                 await _repo.ObterAsync().ConfigureAwait(false);
 
-            return Json(clientes.Select(d=>new {
-                id= d.Id,
-                Nome = d.Nome,
-                Sexo = d.Sexo,
-                Cadastro = d.Cadastro.ToString("dd/MM/yyyy HH:mm"),
-                Alteracao = d.Alteracao.ToString("dd/MM/yyyy HH:mm")
-            }));
+            //return Json(clientes.Select(d=>new {
+            //    id= d.Id,
+            //    Nome = d.Nome,
+            //    Sexo = d.Sexo,
+            //    Cadastro = d.Cadastro.ToString("dd/MM/yyyy HH:mm"),
+            //    Alteracao = d.Alteracao.ToString("dd/MM/yyyy HH:mm")
+            //}));
+
+            return Json(clientes);
         }
 
         [Route("{id}")]

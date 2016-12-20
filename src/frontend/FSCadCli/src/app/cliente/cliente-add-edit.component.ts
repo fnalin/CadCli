@@ -11,7 +11,7 @@ import { Sexo } from './cliente';
 export class ClienteAddEditComponent implements OnInit {
     pageTitle: string = 'Clientes';
     subTitle: string = 'Adicionar/Editar clientes';
-    cliente: ICliente = { id: 0, nome: '', sexo: null, cadastro: '', alteracao: '' };
+    cliente: ICliente = { id: 0, nome: '', sexo: null, cadastro: new Date(), alteracao: new Date() };
     clienteForm: FormGroup;
     errorMessage: string;
     statusLoading: boolean = false;

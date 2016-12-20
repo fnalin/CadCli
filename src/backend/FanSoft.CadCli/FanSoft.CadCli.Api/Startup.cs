@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
+using System.Globalization;
 using System.Net;
 
 namespace FanSoft.CadCli.Api
@@ -58,6 +60,9 @@ namespace FanSoft.CadCli.Api
                 var jsonSettings = opt.SerializerSettings;
                 jsonSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
                 jsonSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                jsonSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                //jsonSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat;
+                //jsonSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
             });
             services.AddSingleton(Configuration);
             services.AddScoped(typeof(CadCliDataContext));
@@ -66,7 +71,7 @@ namespace FanSoft.CadCli.Api
 
         }
 
-        public void Configure(IApplicationBuilder app, 
+        public void Configure(IApplicationBuilder app,
             IHostingEnvironment env, ILoggerFactory loggerFactory,
             CadCliDataContext dataContext)
         {
@@ -109,11 +114,15 @@ namespace FanSoft.CadCli.Api
                 }
             });
 
-            app.UseCors(options => {
+            app.UseCors(options =>
+            {
                 options.AllowAnyHeader();
                 options.AllowAnyMethod();
                 options.AllowAnyOrigin();
             });
+
+
+
             app.UseMvc();
 
             DbInitializer.Initialize(dataContext);

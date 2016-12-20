@@ -39,7 +39,7 @@
             <tr *ngFor="let cli of clientes">
                 <td>{{cli.nome}}</td>
                 <td>{{CheckEnum(cli.sexo)}}</td>
-                <td>{{cli.cadastro}}</td>
+                <td>{{cli.cadastro | date:'dd/MM/yyyy HH:mm'}}</td>
                 <td>
                    
                 </td>
