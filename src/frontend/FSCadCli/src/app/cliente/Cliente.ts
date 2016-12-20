@@ -2,10 +2,10 @@ export interface ICliente {
     id: number;
     nome: string;
     sexo: Sexo;
-    cadastro: Date;
-    alteracao: Date
+    cadastro: string;
+    alteracao: string
 }
 
 export enum Sexo {
-    Masculino, Feminino
+    Masculino=0, Feminino=1
 }

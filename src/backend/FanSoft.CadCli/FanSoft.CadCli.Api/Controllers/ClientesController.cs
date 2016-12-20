@@ -1,6 +1,7 @@
 ﻿using FanSoft.CadCli.Core.Contracts.Repositories;
 using FanSoft.CadCli.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -20,7 +21,13 @@ namespace FanSoft.CadCli.Api.Controllers
             var clientes =
                 await _repo.ObterAsync().ConfigureAwait(false);
 
-            return Json(clientes);
+            return Json(clientes.Select(d=>new {
+                id= d.Id,
+                Nome = d.Nome,
+                Sexo = d.Sexo,
+                Cadastro = d.Cadastro.ToString("dd/MM/yyyy HH:mm"),
+                Alteracao = d.Alteracao.ToString("dd/MM/yyyy HH:mm")
+            }));
         }
 
         [Route("{id}")]

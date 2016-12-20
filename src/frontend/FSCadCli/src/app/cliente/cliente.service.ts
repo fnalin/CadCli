@@ -12,7 +12,7 @@ import { ICliente } from './cliente';
 export class ClienteService {
 
     headers: Headers;
-    private _url:string;
+    private _url: string;
 
     constructor(
         private _http: Http,
@@ -33,6 +33,14 @@ export class ClienteService {
             // .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
+
+    salvar(cliente: ICliente): Observable<ICliente> {
+        return this._http.post(this._url, cliente, { headers: this.headers })
+            .map((response: Response) => <ICliente[]>response.json())
+            // .do(data => console.log('All: ' +  JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+
 
     private handleError = (error: Response) => {
         var data: any;

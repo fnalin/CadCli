@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ClienteService } from './cliente.service';
@@ -10,23 +11,34 @@ import { Sexo } from './cliente';
 export class ClienteAddEditComponent implements OnInit {
     pageTitle: string = 'Clientes';
     subTitle: string = 'Adicionar/Editar clientes';
-    cliente: ICliente = { id: 0, nome: '', sexo: Sexo.Masculino, cadastro: new Date(), alteracao: new Date() };
+    cliente: ICliente = { id: 0, nome: '', sexo: null, cadastro: '', alteracao: '' };
     clienteForm: FormGroup;
     errorMessage: string;
     statusLoading: boolean = false;
 
 
-    constructor(private _cliService: ClienteService, private _fb: FormBuilder) { }
+    constructor(
+        private _cliService: ClienteService,
+        private _fb: FormBuilder,
+        private _router: Router) {
+    }
 
     ngOnInit(): void {
         this.clienteForm = this._fb.group({
             nome: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-            sexo: ['', Validators.compose([Validators.required])]
+            sexo: ['', Validators.compose([Validators.required, Validators.pattern("[0-9]+")])]
         });
     }
 
     cadastrar(event) {
-        event.preventDefault();
-        console.log(this.cliente);
+        this._cliService.salvar(this.cliente).subscribe(cli => {
+            this.cliente = cli;
+            this.statusLoading = false;
+            this._router.navigate(['/clientes']);
+        }, error => {
+            this.errorMessage = <any>error;
+            console.log(this.errorMessage);
+            this.statusLoading = false;
+        });
     }
 }
