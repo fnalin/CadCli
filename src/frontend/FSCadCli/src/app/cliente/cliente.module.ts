@@ -5,6 +5,7 @@ import { AjaxLoadingModule } from '../ajax-loading/ajax-loading.module';
 
 import { ClienteService } from './cliente.service';
 import { ClienteListComponent } from './cliente-list.component';
+import { ClienteAddEditComponent } from './cliente-add-edit.component';
 
 import { LoggedInGuard } from '../login/logged-in.guard';
 
@@ -13,11 +14,12 @@ import { LoggedInGuard } from '../login/logged-in.guard';
         SharedModule,
         AjaxLoadingModule,
         RouterModule.forChild([
-            { path: 'clientes', component: ClienteListComponent, canActivate: [LoggedInGuard] }
+            { path: 'clientes', component: ClienteListComponent, canActivate: [LoggedInGuard] },
+            { path: 'clientes/adicionar', component: ClienteAddEditComponent, canActivate: [LoggedInGuard] }
         ])
     ],
     declarations: [
-        ClienteListComponent
+        ClienteListComponent, ClienteAddEditComponent
     ],
     providers: [
         ClienteService

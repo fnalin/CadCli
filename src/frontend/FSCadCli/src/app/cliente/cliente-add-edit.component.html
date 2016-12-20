@@ -1,0 +1,26 @@
+<div class="mt-1">
+    <h1>{{pageTitle}}</h1>
+</div>
+<p class="lead">
+    {{subTitle}}
+</p>
+<hr />
+
+<form (submit)="cadastrar($event)" [formGroup]="clienteForm">
+
+<div class="form-group row"
+         [ngClass]="{'has-danger':clienteForm.controls.nome.invalid && clienteForm.controls.nome.touched}">
+        <label  class="col-sm-2 col-form-label form-control-label">Nome</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text"
+                   required
+                   formControlName="nome"
+                   name="nome"
+                   [(ngModel)]="cliente.nome">
+        </div>
+        <div class="form-control-feedback" *ngIf="clienteForm.controls.nome.invalid && clienteForm.controls.nome.touched">
+            Este campo é obrigatório e deve ter entre 2 e 50 caracteres
+        </div>
+    </div>
+
+</form>
