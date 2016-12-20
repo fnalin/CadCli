@@ -15,7 +15,8 @@ import { LoggedInGuard } from '../login/logged-in.guard';
         AjaxLoadingModule,
         RouterModule.forChild([
             { path: 'clientes', component: ClienteListComponent, canActivate: [LoggedInGuard] },
-            { path: 'clientes/adicionar', component: ClienteAddEditComponent, canActivate: [LoggedInGuard] }
+            { path: 'clientes/adicionar', component: ClienteAddEditComponent, canActivate: [LoggedInGuard] },
+            { path: 'clientes/:id', component: ClienteAddEditComponent, canActivate: [LoggedInGuard] },
         ])
     ],
     declarations: [

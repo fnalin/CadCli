@@ -35,6 +35,20 @@
         </div>
     </div>
 
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label form-control-label text-right">Cadastro</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="cadastro" name="cadastro" type="text" [ngModel]="cliente.cadastro | date:'dd/MM/yyyy HH:mm:ss'">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label form-control-label text-right">Alterado</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="alteracao" name="alteracao" type="text" [ngModel]="cliente.alteracao | date:'dd/MM/yyyy HH:mm:ss'">
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sm-10 offset-sm-2">
             <button type="submit" class="btn btn-primary" [disabled]="clienteForm.invalid">Salvar</button>

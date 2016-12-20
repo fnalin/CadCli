@@ -41,7 +41,10 @@
                 <td>{{CheckEnum(cli.sexo)}}</td>
                 <td>{{cli.cadastro | date:'dd/MM/yyyy HH:mm'}}</td>
                 <td>
-                   
+                    <span class="pull-right">
+                        <i title="Editar"  routerLink="/clientes/{{cli.id}}" class="fa fa-pencil-square-o" style="cursor:pointer;" aria-hidden="true"></i>
+                        <i title="Excluir"  class="fa fa-trash-o" style="cursor:pointer;" aria-hidden="true"></i>
+                    </span>
                 </td>
 
             </tr>

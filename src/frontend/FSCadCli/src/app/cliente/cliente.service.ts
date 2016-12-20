@@ -24,7 +24,7 @@ export class ClienteService {
         let authToken = localStorage.getItem('auth_token');
         this.headers.append('Authorization', `Bearer ${authToken}`);
 
-        this._url = this._config.urlBase("clientes");
+        this._url = this._config.urlBase("clientes/");
     }
 
     obterTodos(): Observable<ICliente[]> {
@@ -34,8 +34,22 @@ export class ClienteService {
             .catch(this.handleError);
     }
 
+    obter(id: number): Observable<ICliente> {
+        return this._http.get(this._url + id, { headers: this.headers })
+            .map((response: Response) => <ICliente>response.json())
+            // .do(data => console.log('All: ' +  JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+
     salvar(cliente: ICliente): Observable<ICliente> {
-        return this._http.post(this._url, cliente, { headers: this.headers })
+        let verb;
+        if (cliente.id == 0) {
+            verb = this._http.post(this._url, cliente, { headers: this.headers });
+        } else {
+            verb = this._http.put(this._url + cliente.id, cliente, { headers: this.headers });
+        }
+
+        return verb
             .map((response: Response) => <ICliente[]>response.json())
             // .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
