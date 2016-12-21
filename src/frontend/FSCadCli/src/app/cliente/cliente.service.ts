@@ -55,15 +55,28 @@ export class ClienteService {
             .catch(this.handleError);
     }
 
+    excluir(id: Number): Observable<ICliente> {
+        return this._http.delete(this._url + id, { headers: this.headers })
+            .map((response: Response) => <ICliente[]>response.json())
+            // .do(data => console.log('All: ' +  JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+
 
     private handleError = (error: Response) => {
         var data: any;
-        if (error.status == 401 || error.status == 403) {
-            localStorage.removeItem('auth_token');
-            this.router.navigate(['login']);
-            data = "Acesso não autorizado";
-        } else {
-            data = JSON.parse((<any>error)._body).errors;
+        switch (error.status) {
+            case 401 || 403:
+                localStorage.removeItem('auth_token');
+                this.router.navigate(['login']);
+                data = "Acesso não autorizado";
+                break;
+            case 404:
+                data = "Recurso não localizado";
+                break;
+            default:
+                data = JSON.parse((<any>error)._body).errors;
+                break;
         }
         return Observable.throw(data || 'Server error');
     }

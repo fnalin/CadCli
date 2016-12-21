@@ -6,7 +6,7 @@
     {{subTitle}}
 </p>
 
-<div class="table-responsive" *ngIf='clientes && clientes.length'> 
+<div class="table-responsive" *ngIf='clientes && clientes.length'>
     <table class="table table-hover table-sm">
         <thead>
             <tr>
@@ -14,40 +14,42 @@
                     <button class="btn btn-secondary btn-sm" (click)="ObterDados()">
                         <i class="fa fa-refresh" aria-hidden="true"></i> Atualizar
                     </button>
-                    <a class="btn btn-secondary btn-sm"
-                       routerLink="/clientes/adicionar">
+                    <a class="btn btn-secondary btn-sm" routerLink="/clientes/adicionar">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> Novo
                     </a>
                 </th>
                 <th>
                     <span class="pull-right">
                         <i class="fa fa-caret-square-o-up" style="cursor:pointer;" aria-hidden="true"></i>
-                        <i class="fa fa-caret-square-o-down" style="cursor:pointer;" aria-hidden="true"></i>
-                        1/1
-                    </span>
-                </th>
-            </tr>
+<i class="fa fa-caret-square-o-down" style="cursor:pointer;" aria-hidden="true"></i>
+1/1
+</span>
+</th>
+</tr>
 
-            <tr>
-                <th>Nome</th>
-                <th>Sexo</th>
-                <th>Data Cadastro</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let cli of clientes">
-                <td>{{cli.nome}}</td>
-                <td>{{CheckEnum(cli.sexo)}}</td>
-                <td>{{cli.cadastro | date:'dd/MM/yyyy HH:mm'}}</td>
-                <td>
-                    <span class="pull-right">
-                        <i title="Editar"  routerLink="/clientes/{{cli.id}}" class="fa fa-pencil-square-o" style="cursor:pointer;" aria-hidden="true"></i>
-                        <i title="Excluir"  class="fa fa-trash-o" style="cursor:pointer;" aria-hidden="true"></i>
-                    </span>
-                </td>
+<tr>
+    <th>Nome</th>
+    <th>Sexo</th>
+    <th>Data Cadastro</th>
+    <th></th>
+</tr>
+</thead>
+<tbody>
+    <tr *ngFor="let cli of clientes">
+        <td>{{cli.nome}}</td>
+        <td>{{CheckEnum(cli.sexo)}}</td>
+        <td>{{cli.cadastro | date:'dd/MM/yyyy HH:mm'}}</td>
+        <td>
+            <span class="pull-right">
+                <i title="Editar"  routerLink="/clientes/{{cli.id}}" class="fa fa-pencil-square-o" style="cursor:pointer;" aria-hidden="true"></i>
+                <i title="Excluir" (click)="excluir(cli)" class="fa fa-trash-o" style="cursor:pointer;" aria-hidden="true"></i>
+            </span>
+        </td>
 
-            </tr>
-        </tbody>
-    </table>
+</tr>
+</tbody>
+</table>
 </div>
+<template confirm>
+    <confirm-modal-component></confirm-modal-component>
+</template>

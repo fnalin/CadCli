@@ -28,8 +28,8 @@ export class ClienteAddEditComponent implements OnInit {
         this.clienteForm = this._fb.group({
             nome: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
             sexo: ['', Validators.compose([Validators.required, Validators.pattern("[0-9]+")])],
-            cadastro: new FormControl({value: '', disabled: true}),
-            alteracao: new FormControl({value: '', disabled: true})
+            cadastro: new FormControl({ value: '', disabled: true }),
+            alteracao: new FormControl({ value: '', disabled: true })
         });
 
         this.route.params.subscribe(params => {
@@ -49,10 +49,11 @@ export class ClienteAddEditComponent implements OnInit {
                     });
             }
 
-});
+        });
     }
 
     cadastrar(event) {
+        event.preventDefault();
         this._cliService.salvar(this.cliente).subscribe(cli => {
             this.cliente = cli;
             this.statusLoading = false;

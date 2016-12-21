@@ -7,6 +7,7 @@ import { ClienteService } from './cliente.service';
 import { ClienteListComponent } from './cliente-list.component';
 import { ClienteAddEditComponent } from './cliente-add-edit.component';
 
+
 import { LoggedInGuard } from '../login/logged-in.guard';
 
 @NgModule({

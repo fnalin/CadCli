@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ClienteModule } from './cliente/cliente.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { LoginModule } from './login/login.module';
@@ -26,6 +27,7 @@ import { HomeComponent } from './home/home.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    NgbModule.forRoot(),
     UsuarioModule,
     ClienteModule,
     LoginModule,
