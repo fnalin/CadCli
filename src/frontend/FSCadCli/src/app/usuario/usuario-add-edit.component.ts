@@ -3,23 +3,23 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
-import { ClienteService } from './cliente.service';
-import { ICliente } from './cliente';
-import { Sexo } from './cliente';
+import { UsuarioService } from './usuario.service';
+import { IUsuario } from './usuario';
+
 @Component({
-    templateUrl: './cliente-add-edit.component.html'
+    templateUrl: './usuario-add-edit.component.html'
 })
-export class ClienteAddEditComponent implements OnInit {
-    pageTitle: string = 'Clientes';
-    subTitle: string = 'Adicionar/Editar clientes';
-    cliente: ICliente = { id: 0, nome: '', sexo: null, cadastro: new Date(), alteracao: new Date() };
-    clienteForm: FormGroup;
+export class UsuarioAddEditComponent implements OnInit {
+    pageTitle: string = 'Usuario';
+    subTitle: string = 'Adicionar | Editar usuário';
+    usuario: IUsuario = { id: 0, nome: '', email: '', senha: '', cadastro: new Date(), alteracao: new Date() };
+    usuarioForm: FormGroup;
     errorMessage: string;
     statusLoading: boolean = false;
 
 
     constructor(
-        private _cliService: ClienteService,
+        private _usuarioService: UsuarioService,
         private toastr: ToastsManager,
         private _fb: FormBuilder,
         private _router: Router,
@@ -27,9 +27,9 @@ export class ClienteAddEditComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.clienteForm = this._fb.group({
+        this.usuarioForm = this._fb.group({
             nome: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-            sexo: ['', Validators.compose([Validators.required, Validators.pattern("[0-9]+")])],
+            email: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(100)])],
             cadastro: new FormControl({ value: '', disabled: true }),
             alteracao: new FormControl({ value: '', disabled: true })
         });
@@ -40,9 +40,9 @@ export class ClienteAddEditComponent implements OnInit {
 
             if (id) {
                 this.statusLoading = true;
-                this._cliService.obter(id)
-                    .subscribe(cli => {
-                        this.cliente = cli;
+                this._usuarioService.obter(id)
+                    .subscribe(user => {
+                        this.usuario = user;
                         this.statusLoading = false;
                     }, error => {
                         this.errorMessage = <any>error;
@@ -56,11 +56,11 @@ export class ClienteAddEditComponent implements OnInit {
 
     cadastrar(event) {
         event.preventDefault();
-        this._cliService.salvar(this.cliente).subscribe(cli => {
-            this.cliente = cli;
+        this._usuarioService.salvar(this.usuario).subscribe(user => {
+            this.usuario = user;
             this.statusLoading = false;
             this.toastr.success("Informações salvas!", 'Sucesso');
-            this._router.navigate(['/clientes']);
+            this._router.navigate(['/usuarios']);
         }, error => {
             this.errorMessage = <any>error;
             this.toastr.error(this.errorMessage, 'Erro');

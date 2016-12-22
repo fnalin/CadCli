@@ -12,7 +12,6 @@ namespace FanSoft.CadCli.Api.Models
         [EmailAddress(ErrorMessage = "E-mail em formato inválido.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage ="O Campo Senha é obrigatório")]
         public string Senha { get; set; }
 
     }

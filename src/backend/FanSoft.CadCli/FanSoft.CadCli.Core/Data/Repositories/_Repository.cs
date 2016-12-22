@@ -40,12 +40,12 @@ namespace FanSoft.CadCli.Core.Data.Repositories
             _context.SaveChanges();
         }
 
-        public virtual T Obter(params object[] key)
+        public virtual T Obter(object key)
         {
             return _context.Set<T>().Find(key);
         }
 
-        public virtual async Task<T> ObterAsync(params object[] key)
+        public virtual async Task<T> ObterAsync(object key)
         {
             return await _context.Set<T>().FindAsync(key);
         }

@@ -2,6 +2,7 @@
 using FanSoft.CadCli.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -21,19 +22,22 @@ namespace FanSoft.CadCli.Api.Controllers
             var usuarios =
                 await _repo.ObterAsync().ConfigureAwait(false);
 
+            usuarios.ToList().ForEach(d=>d.ProtegerSenha());
             return Json(usuarios);
         }
 
         [Route("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var usuarios =
+            var usuario =
                 await _repo.ObterAsync(id).ConfigureAwait(false);
 
-            if (usuarios == null)
+            if (usuario == null)
                 Response.StatusCode = (int)HttpStatusCode.NotFound;
 
-            return Json(usuarios);
+            usuario.ProtegerSenha();
+
+            return Json(usuario);
         }
 
         [HttpPost]
@@ -47,7 +51,7 @@ namespace FanSoft.CadCli.Api.Controllers
             }
 
             var usuario =
-                new Usuario(usuarioVM.Nome, usuarioVM.Email, usuarioVM.Senha);
+                new Usuario(usuarioVM.Nome, usuarioVM.Email);
             _repo.Adicionar(usuario);
             _repo.Salvar();
 
@@ -77,7 +81,7 @@ namespace FanSoft.CadCli.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(int id)
         {
             var usuario =
                 await _repo.ObterAsync(id).ConfigureAwait(false);

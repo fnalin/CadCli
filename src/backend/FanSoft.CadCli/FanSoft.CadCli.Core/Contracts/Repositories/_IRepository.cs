@@ -15,7 +15,7 @@ namespace FanSoft.CadCli.Core.Contracts.Repositories
 
         IEnumerable<T> Obter();
         Task<IEnumerable<T>> ObterAsync();
-        T Obter(params object[] key);
-        Task<T> ObterAsync(params object[] key);
+        T Obter(object key);
+        Task<T> ObterAsync(object key);
     }
 }

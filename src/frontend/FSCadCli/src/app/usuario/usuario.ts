@@ -3,6 +3,6 @@ export class IUsuario {
     email: string;
     nome: string;
     senha: string;
-    cadastro: string;
-    alteracao: string;
+    cadastro: Date;
+    alteracao: Date;
 }

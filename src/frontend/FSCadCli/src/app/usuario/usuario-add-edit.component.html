@@ -1,0 +1,52 @@
+<ajax-loading [statusLoading]="statusLoading"></ajax-loading>
+<div class="mt-1">
+    <h1>{{pageTitle}}</h1>
+</div>
+<p class="lead">
+    {{subTitle}}
+</p>
+<hr />
+
+<form (submit)="cadastrar($event)" [formGroup]="usuarioForm">
+
+    <div class="form-group row" [ngClass]="{'has-danger':usuarioForm.controls.nome.invalid && usuarioForm.controls.nome.touched}">
+        <label class="col-sm-2 col-form-label form-control-label text-right">Nome</label>
+        <div class="col-sm-6">
+            <input class="form-control" type="text" required formControlName="nome" name="nome" [(ngModel)]="usuario.nome">
+        </div>
+        <div class="form-control-feedback" *ngIf="usuarioForm.controls.nome.invalid && usuarioForm.controls.nome.touched">
+            Este campo é obrigatório e deve ter entre 2 e 50 caracteres
+        </div>
+    </div>
+
+    <div class="form-group row" [ngClass]="{'has-danger':usuarioForm.controls.email.invalid && usuarioForm.controls.email.touched}">
+        <label class="col-sm-2 col-form-label form-control-label text-right">Email</label>
+        <div class="col-sm-6">
+            <input class="form-control" type="text" required formControlName="email" name="email" [(ngModel)]="usuario.email">
+        </div>
+        <div class="form-control-feedback" *ngIf="usuarioForm.controls.email.invalid && usuarioForm.controls.email.touched">
+            Este campo é obrigatório e deve ter entre 10 e 100 caracteres
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label form-control-label text-right">Cadastro</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="cadastro" name="cadastro" type="text" [ngModel]="usuario.cadastro | date:'dd/MM/yyyy HH:mm:ss'">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label form-control-label text-right">Alterado</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="alteracao" name="alteracao" type="text" [ngModel]="usuario.alteracao | date:'dd/MM/yyyy HH:mm:ss'">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-primary" [disabled]="usuarioForm.invalid">Salvar</button>
+            <a class="btn btn-secondary" routerLink="/usuarios">Cancelar</a>
+        </div>
+    </div>
+</form>

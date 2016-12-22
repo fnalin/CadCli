@@ -12,14 +12,14 @@ namespace FanSoft.CadCli.Core.Data.Repositories
         public ClienteRepository(CadCliDataContext context) : base(context)
         { }
 
-        public override Cliente Obter(params object[] key)
-        {
-            return _context.Clientes.FirstOrDefault(d => d.Id == (int)key[0]);
-        }
-        public override async Task<Cliente> ObterAsync(params object[] key)
-        {
-            return await _context.Clientes.FirstOrDefaultAsync(d => d.Id == (int)key[0]);
-        }
+        //public override Cliente Obter(params object[] key)
+        //{
+        //    return _context.Clientes.FirstOrDefault(d => d.Id == (int)key[0]);
+        //}
+        //public override async Task<Cliente> ObterAsync(params object[] key)
+        //{
+        //    return await _context.Clientes.FirstOrDefaultAsync(d => d.Id == (int)key[0]);
+        //}
 
         public override IEnumerable<Cliente> Obter()
         {

@@ -23,13 +23,7 @@ namespace FanSoft.CadCli.Core.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (string.IsNullOrWhiteSpace(_conn))
-            {
-                throw new ArgumentException("Connection string not found");
-            }
-
             optionsBuilder.UseSqlServer(_conn);
-            
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FanSoft.CadCli;Trusted_Connection=True;");
         }
 
