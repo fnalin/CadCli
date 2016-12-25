@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppSettingsService } from '../config/app-settings.service';
+import { BaseService } from '../shared/base.service';
+import { GlobalEventsManagerService } from '../shared/global-events-manager.service';
+
 
 import "rxjs/Rx";
 import { Observable } from 'rxjs/Observable';
@@ -9,25 +12,24 @@ import { Observable } from 'rxjs/Observable';
 import { IUsuario } from './usuario';
 
 @Injectable()
-export class UsuarioService {
+export class UsuarioService extends BaseService {
 
     headers: Headers;
-    private _url:string;
+    private _url: string;
 
     constructor(
         private _http: Http,
         private _config: AppSettingsService,
-        private router: Router) {
-        this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json');
+        protected globalEventsManager: GlobalEventsManagerService,
+        protected router: Router) {
 
-        let authToken = localStorage.getItem('auth_token');
-        this.headers.append('Authorization', `Bearer ${authToken}`);
+        super(router, globalEventsManager);
 
         this._url = this._config.urlBase("usuarios/");
     }
 
     obterTodos(): Observable<IUsuario[]> {
+        this.montarHeader();
         return this._http.get(this._url, { headers: this.headers })
             .map((response: Response) => <IUsuario[]>response.json())
             // .do(data => console.log('All: ' +  JSON.stringify(data)))
@@ -35,12 +37,14 @@ export class UsuarioService {
     }
 
     obter(id: Number): Observable<IUsuario> {
+        this.montarHeader();
         return this._http.get(this._url + id, { headers: this.headers })
             .map((response: Response) => <IUsuario>response.json())
             .catch(this.handleError);
     }
 
     salvar(usuario: IUsuario): Observable<IUsuario> {
+        this.montarHeader();
         let verb;
         if (usuario.id == 0) {
             verb = this._http.post(this._url, usuario, { headers: this.headers });
@@ -50,28 +54,14 @@ export class UsuarioService {
 
         return verb
             .map((response: Response) => <IUsuario[]>response.json())
-            // .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
 
     excluir(id: Number): Observable<IUsuario> {
+        this.montarHeader();
         return this._http.delete(this._url + id, { headers: this.headers })
             .map((response: Response) => <IUsuario[]>response.json())
-            // .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
-
-    private handleError = (error: Response) => {
-        var data: any;
-        if (error.status == 401 || error.status == 403) {
-            localStorage.removeItem('auth_token');
-            this.router.navigate(['login']);
-            data = "Acesso não autorizado";
-        } else {
-            data = JSON.parse((<any>error)._body).errors;
-        }
-        return Observable.throw(data || 'Server error');
-    }
-
 
 }

@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
+import { AppSettingsService } from '../config/app-settings.service';
 
 import "rxjs/Rx";
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserService {
-  private loggedIn = false;
 
-  constructor(private http: Http) {
-    this.loggedIn = !!localStorage.getItem('auth_token');
+  private _url: string;
+
+  constructor(
+    private http: Http,
+    private _config: AppSettingsService,
+  ) {
+    this._url = this._config.urlBase("security/token/");
   }
 
   login(username, password) {
@@ -17,13 +22,12 @@ export class UserService {
     headers.append('Content-Type', 'application/json');
 
     return this.http
-      .post('http://localhost:60814/api/v1/security/token',JSON.stringify({ username, password }),
-            { headers })
+      .post(this._url, JSON.stringify({ username, password }),
+      { headers })
       .map(res => res.json())
       .map((res) => {
         if (res.authenticated) {
           localStorage.setItem('auth_token', res.token);
-          this.loggedIn = true;
         }
 
         return res.authenticated;
@@ -41,10 +45,9 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('auth_token');
-    this.loggedIn = false;
   }
 
   isLoggedIn() {
-    return this.loggedIn;
+    return !!localStorage.getItem('auth_token');
   }
 }

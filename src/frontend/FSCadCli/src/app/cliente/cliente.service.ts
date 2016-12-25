@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppSettingsService } from '../config/app-settings.service';
+import { BaseService } from '../shared/base.service';
+import { GlobalEventsManagerService } from '../shared/global-events-manager.service';
 
 import "rxjs/Rx";
 import { Observable } from 'rxjs/Observable';
@@ -9,39 +11,36 @@ import { Observable } from 'rxjs/Observable';
 import { ICliente } from './cliente';
 
 @Injectable()
-export class ClienteService {
+export class ClienteService extends BaseService {
 
-    headers: Headers;
     private _url: string;
 
     constructor(
         private _http: Http,
         private _config: AppSettingsService,
-        private router: Router) {
-        this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json');
+        protected globalEventsManager: GlobalEventsManagerService,
+        protected router: Router) {
 
-        let authToken = localStorage.getItem('auth_token');
-        this.headers.append('Authorization', `Bearer ${authToken}`);
-
+        super(router, globalEventsManager);
         this._url = this._config.urlBase("clientes/");
     }
 
     obterTodos(): Observable<ICliente[]> {
+        this.montarHeader();
         return this._http.get(this._url, { headers: this.headers })
             .map((response: Response) => <ICliente[]>response.json())
-            // .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
 
     obter(id: number): Observable<ICliente> {
+        this.montarHeader();
         return this._http.get(this._url + id, { headers: this.headers })
             .map((response: Response) => <ICliente>response.json())
-            // .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
 
     salvar(cliente: ICliente): Observable<ICliente> {
+        this.montarHeader();
         let verb;
         if (cliente.id == 0) {
             verb = this._http.post(this._url, cliente, { headers: this.headers });
@@ -51,35 +50,13 @@ export class ClienteService {
 
         return verb
             .map((response: Response) => <ICliente[]>response.json())
-            // .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
 
     excluir(id: Number): Observable<ICliente> {
+        this.montarHeader();
         return this._http.delete(this._url + id, { headers: this.headers })
             .map((response: Response) => <ICliente[]>response.json())
-            // .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
-
-
-    private handleError = (error: Response) => {
-        var data: any;
-        switch (error.status) {
-            case 401 || 403:
-                localStorage.removeItem('auth_token');
-                this.router.navigate(['login']);
-                data = "Acesso não autorizado";
-                break;
-            case 404:
-                data = "Recurso não localizado";
-                break;
-            default:
-                data = JSON.parse((<any>error)._body).errors;
-                break;
-        }
-        return Observable.throw(data || 'Server error');
-    }
-
-
 }
