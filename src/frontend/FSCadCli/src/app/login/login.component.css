@@ -1,0 +1,27 @@
+form{
+        width:99%;
+        margin: 0 auto;
+        padding: 10px 20px;
+        background-color: #f6f6f6;
+        border-radius: 10px;
+        box-shadow: 10px 10px 5px #dbd8d8;;
+    }
+
+@media screen and (min-width: 512px) {
+    form{
+        width:90%;
+        margin: 0 auto;
+        padding: 20px 30px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    form{
+        width:60%;
+        padding: 40px 60px 30px 60px;
+    }
+}
+
+.text-center{
+    text-align: center;
+}

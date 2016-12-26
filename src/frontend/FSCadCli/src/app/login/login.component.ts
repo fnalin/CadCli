@@ -7,7 +7,8 @@ import { UserService } from './user.service';
 import { ILogin } from './login.model';
 
 @Component({
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit {
 
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
   login(event) {
     event.preventDefault();
     this.statusLoading = true;
-    this.userService.login(this.loginVm.username, this.loginVm.password)
+    this.userService.login(this.loginVm)
       .subscribe((result) => {
         if (result) {
           this.router.navigate(['']);

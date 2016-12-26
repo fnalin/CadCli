@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { AppSettingsService } from '../config/app-settings.service';
+import {ILogin} from './login.model';
 
 import "rxjs/Rx";
 import { Observable } from 'rxjs/Observable';
@@ -17,12 +18,12 @@ export class UserService {
     this._url = this._config.urlBase("security/token/");
   }
 
-  login(username, password) {
+  login(dados: ILogin) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     return this.http
-      .post(this._url, JSON.stringify({ username, password }),
+      .post(this._url, dados,
       { headers })
       .map(res => res.json())
       .map((res) => {
